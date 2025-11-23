@@ -1,10 +1,16 @@
 import CommentSection from './comment-section/CommentSection'
 import PostSection from './PostSection'
 import AddCommentSection from './AddCommentSection'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { TComment } from '../types'
+import { useNavigationPanelContext } from '@contexts/NavigationPanelContext'
+import BackButton from '@components/BackButton'
+import { useNavigate } from 'react-router-dom'
 
 export default function PostView() {
+    const { navElements: [, setNavElements] } = useNavigationPanelContext()!
+    const navigate = useNavigate()
+
     const [comments] = useState<TComment[]>([
         {
             content: `
@@ -75,6 +81,21 @@ export default function PostView() {
             ]
         }
     ])
+
+    useEffect(() => {
+        setNavElements({
+            mobileLeft: (
+	            <div className='flex gap-2 xl:hidden'>
+	                <BackButton onClick={() => navigate(-1)} />
+	                <div className="action-title h-12 overflow-hidden flex flex-row justify-start items-center">
+	                    <span className="text-lg font-['Space_Grotesk']">Post</span>
+	                </div>
+	            </div>
+            )
+        })
+
+        return () => setNavElements({})
+    }, [])
 
     return (
         <div className='post-view flex flex-col gap-10'>
