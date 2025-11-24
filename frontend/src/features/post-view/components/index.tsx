@@ -6,6 +6,7 @@ import type { TComment } from '../types'
 import { useNavigationPanelContext } from '@contexts/NavigationPanelContext'
 import BackButton from '@components/BackButton'
 import { useNavigate } from 'react-router-dom'
+import RecommendedPostsSection from './recommendation-section/RecommendedPostsSection'
 
 export default function PostView() {
     const { navElements: [, setNavElements] } = useNavigationPanelContext()!
@@ -102,6 +103,7 @@ export default function PostView() {
             <PostSection />
             <AddCommentSection />
             <CommentSection comments={comments} />
+            <RecommendedPostsSection />
         </div>
     )
 }
