@@ -1,5 +1,5 @@
 import React from 'react'
 
-export default function Backdrop({ zIndex, onClick }: { zIndex: number, onClick?: (e?: React.MouseEvent) => void }) {
-    return <div className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-${zIndex}`} onClick={onClick} />
+export default function Backdrop({ zIndex, onClick, extendedClass }: { zIndex: number, onClick?: (e?: React.MouseEvent) => void, extendedClass?: string }) {
+	return <div className={`fixed inset-0 bg-black/20 z-${zIndex} ${extendedClass}`} onClick={onClick} />
 }

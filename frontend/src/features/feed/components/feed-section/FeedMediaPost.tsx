@@ -1,20 +1,21 @@
+import FloatingDropdown from "@components/features/FloatingDropdown";
 import PostInteraction from "@components/PostInteraction";
+import type { StateController } from "@stypes/global";
 import { useNavigate } from "react-router-dom";
 
-export default function FeedMediaPost({ withMedia = true, isLast }: { withMedia: boolean, isLast: boolean }) {
+export default function FeedMediaPost({ withMedia = true, isLast, id, openedPostTools: [openedPostTools, setOpenedPostTools] }: { withMedia: boolean, isLast: boolean, id: number, openedPostTools: StateController<number | null>}) {
 	const navigate = useNavigate()
 
 	return (
 		<div className={`media-post
 			${isLast && 'mb-10'}
 			w-full
-			flex
-			cursor-pointer
-		`} onClick={() => navigate("/post")}>
+			flex gap-2
+		`}>
 			<div className="left-side hidden xl:block w-auto mr-[5px]">
 				<div className={`author-profile-pic justify-self-start w-10 h-10 overflow-hidden rounded-[50%]`}>
-                    <img 
-                        src="https://placehold.co/600x400/yellow/black?text=A" 
+                    <img
+                        src="https://placehold.co/600x400/yellow/black?text=A"
                         className='w-full h-full object-cover'
                         alt="user"
                     />
@@ -28,8 +29,8 @@ export default function FeedMediaPost({ withMedia = true, isLast }: { withMedia:
 					<div className="post-topbar w-full flex justify-between">
 						<div className="author-info flex items-center text-[14px] gap-2">
 							<div className={`author-profile-pic block xl:hidden justify-self-start w-10 h-10 overflow-hidden rounded-[50%]`}>
-								<img 
-									src="https://placehold.co/600x400/yellow/black?text=A" 
+								<img
+									src="https://placehold.co/600x400/yellow/black?text=A"
 									className='w-full h-full object-cover'
 									alt="user"
 								/>
@@ -43,17 +44,20 @@ export default function FeedMediaPost({ withMedia = true, isLast }: { withMedia:
 							<div className="add-friend">
 								<button className='text-blue-700 hover:underline cursor-pointer font-bold'>Add Friend</button>
 							</div>
-							<div className="three-dots">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke="#464646" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
-									<path d="M18 13C18.5523 13 19 12.5523 19 12C19 11.4477 18.5523 11 18 11C17.4477 11 17 11.4477 17 12C17 12.5523 17.4477 13 18 13Z" stroke="#464646" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
-									<path d="M6 13C6.55228 13 7 12.5523 7 12C7 11.4477 6.55228 11 6 11C5.44772 11 5 11.4477 5 12C5 12.5523 5.44772 13 6 13Z" stroke="#464646" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
-								</svg>
+							<div className="three-dots relative">
+								<button className="h-auto w-auto flex justify-center items-center cursor-pointer" onClick={() => setOpenedPostTools(id === openedPostTools ? null : id)}>
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke="#464646" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+										<path d="M18 13C18.5523 13 19 12.5523 19 12C19 11.4477 18.5523 11 18 11C17.4477 11 17 11.4477 17 12C17 12.5523 17.4477 13 18 13Z" stroke="#464646" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+										<path d="M6 13C6.55228 13 7 12.5523 7 12C7 11.4477 6.55228 11 6 11C5.44772 11 5 11.4477 5 12C5 12.5523 5.44772 13 6 13Z" stroke="#464646" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+									</svg>
+								</button>
+								{ openedPostTools === id && <FloatingDropdown close={() => setOpenedPostTools(null)} />}
 							</div>
 						</div>
 					</div>
 
-					<div className="post-info mt-2">
+					<div className="post-info mt-2 cursor-pointer" onClick={() => navigate("/post")}>
 						<div className="post-title font-bold text-[15px]">
 							<span>Classical and Operant Conditioning of Memory Forming</span>
 						</div>
@@ -64,7 +68,7 @@ export default function FeedMediaPost({ withMedia = true, isLast }: { withMedia:
 				</div>
 
 				{withMedia && <div className="post-media
-					mt-2 
+					mt-2
 					overflow-hidden rounded-[15px]
 				">
 					<img src="https://placehold.co/600x400/orange/white?text=Post Image" alt="Post Image" className='w-full h-full object-cover' />
@@ -72,7 +76,7 @@ export default function FeedMediaPost({ withMedia = true, isLast }: { withMedia:
 
 				<div className="post-interaction
 					w-[90%] mt-2
-					flex gap-5 
+					flex gap-5
 					text-[12px]
 				">
 					<PostInteraction name='reacts' value='6.8k'>
