@@ -64,9 +64,7 @@ app.command("frontend:icon <name>").action((name) => {
 	const sourceName = `frontend/src/assets/icons/${name.toLowerCase()}.tsx`;
 	const functionName = `${name}Icon`;
 	try {
-		const source = project.createSourceFile(sourceName, "", {
-			overwrite: true,
-		});
+		const source = project.createSourceFile(sourceName, "");
 		source.addFunction({
 			name: functionName,
 			isDefaultExport: true,
