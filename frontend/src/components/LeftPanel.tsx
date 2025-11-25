@@ -1,4 +1,7 @@
 import React, { useState } from "react"
+import BackButton from "./BackButton"
+import { DecksContainer } from "../features/study-space/components/left-panel/DecksSection"
+import DecksSearchBar from "../features/study-space/components/left-panel/DecksSearchBar"
 
 function LeftPanelNavigationItem({ label, children, extendedClass, onClick }: { label: string, children: React.ReactElement<any>, extendedClass?: string, onClick?: any }) {
 	const clonedIcon = React.cloneElement(children, {
@@ -53,6 +56,7 @@ LeftPanelNavigationItem.button = ({ label, children }: { label: string, children
 	)
 }
 
+
 export default function LeftPanel({ open = false }: { open: boolean }) {
 	type ToggleableItem = 'home' | 'popular' | 'friends' | 'groups';
 	const [activeItem, __setActiveItem] = useState<ToggleableItem | null>(null);
@@ -64,6 +68,7 @@ export default function LeftPanel({ open = false }: { open: boolean }) {
 	return (
 		<div className={`left-panel
 			bg-(--leftpanel-maincontainer-clr)
+			row-span-2
 			overflow-visible border-gray-300 border-r-2
 			absolute w-[65%] z-50 h-[90vh] bottom-0
 			transition-transform duration-300
@@ -73,7 +78,7 @@ export default function LeftPanel({ open = false }: { open: boolean }) {
 			lg:w-[30%]
 			xl:static xl:flex xl:flex-col xl:items-start xl:w-full xl:translate-x-0 xl:border-r-0 xl:h-screen xl:z-0
 		`}>
-			<div className="leftpanel-container overflow-y-auto w-[90%] h-full flex flex-col gap-5 items-center">
+			{/*<div className="leftpanel-container overflow-y-auto w-[90%] h-full flex flex-col gap-5 items-center">
 				<div className="logo-container hidden w-[90%] xl:flex justify-start pl-[2vh]">
 					<svg
 						width="122"
@@ -421,6 +426,16 @@ export default function LeftPanel({ open = false }: { open: boolean }) {
 						</svg>
 					</LeftPanelNavigationItem>
 				</div>
+			</div>*/}
+
+			<div className="container flex-col w-[92%] h-[98%] flex mt-auto mx-auto gap-5">
+				<div className="title hidden xl:flex items-center gap-4">
+					<BackButton />
+					<span className="font-medium font-['Space_Grotesk'] text-[20px]">Study Space</span>
+				</div>
+
+				<DecksSearchBar />
+				<DecksContainer />
 			</div>
 
 			{/*<div className="toggle-sidebar

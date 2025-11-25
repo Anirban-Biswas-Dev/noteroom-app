@@ -6,6 +6,7 @@ import FloatingElementsProvider from "../contexts/FloatingElementsContext";
 import PostView from "../features/post-view/components";
 import MobilePostSection from "../features/feed/components/post-section/MobilePostSection";
 import GlobalLayoutProvider from "@contexts/GlobalLayoutContext";
+import StudySpace from "../features/study-space/components";
 
 export default function AppRouters() {
     return (
@@ -21,6 +22,7 @@ export default function AppRouters() {
                     <Route path="/" element={<Feed />} />
                     <Route path="/post" element={<PostView />} />
                     <Route path="/post/create" element={<MobilePostSection />} />
+                    <Route path="/space" element={<StudySpace />} />
                 </Route>
 
                 <Route path="/signup" element={ <Signup /> }></Route>

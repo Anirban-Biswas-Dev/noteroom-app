@@ -18,7 +18,7 @@ function MainContainer({ children }: { children: React.ReactNode | React.ReactNo
             bg-(--leftpanel-maincontainer-clr)
             h-screen overflow-hidden w-full
             grid grid-cols-1
-            xl:grid-cols-[1.2fr_6fr]
+            xl:grid-cols-[1.2fr_6fr] xl:grid-rows-[auto_1fr]
             desktop:grid-cols-[0.9fr_5fr]
         ">
             { children }
