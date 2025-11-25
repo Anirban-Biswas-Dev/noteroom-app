@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import icons from "@utils/iconsLoader"
+import { useNavigate } from "react-router-dom"
 
 function ResizedSVGIconElement({ icon }: { icon: React.ReactElement<SVGElement> }) {
 	return React.cloneElement(icon, {
@@ -59,9 +60,11 @@ function LeftPanelNavigationButton({ label, icon }: { label: string, icon?: Reac
 export default function LeftPanelNavigation() {
 	type ToggleableItem = 'home' | 'popular' | 'friends' | 'groups';
 	const [activeItem, __setActiveItem] = useState<ToggleableItem | null>(null);
+	const navigate = useNavigate()
 
-	function setActiveItem(item: ToggleableItem) {
+	function setActiveItem(item: ToggleableItem, to: string) {
 		__setActiveItem(item === activeItem ? null : item);
+		navigate(to)
 	}
 
 	return (
@@ -103,14 +106,14 @@ export default function LeftPanelNavigation() {
 				</svg>
 			</div>
 			<div className="items-container mt-1 xl:mt-0 w-[95%] flex flex-col items-center self-end gap-[1vh]">
-				<LeftPanelNavigationItem label='Home' icon={ <icons.home fill={activeItem === "home" ? "black" : "none"} /> } onClick={() => setActiveItem('home')} />
-				<LeftPanelNavigationItem label='Popular' icon={<icons.popular fill={activeItem === "popular" ? "black" : "none"} /> } onClick={() => setActiveItem('popular')} />
-				<LeftPanelNavigationItem label='Friends' icon={<icons.friends fill={activeItem === "friends" ? "black" : "none"} /> } onClick={() => setActiveItem('friends')} />
+				<LeftPanelNavigationItem label='Home' icon={ <icons.home fill={activeItem === "home" ? "black" : "none"} /> } onClick={() => setActiveItem('home', '/')} />
+				<LeftPanelNavigationItem label='Popular' icon={<icons.popular fill={activeItem === "popular" ? "black" : "none"} /> } onClick={() => setActiveItem('popular', '/')} />
+				<LeftPanelNavigationItem label='Friends' icon={<icons.friends fill={activeItem === "friends" ? "black" : "none"} /> } onClick={() => setActiveItem('friends', '/')} />
 				<LeftPanelNavigationItem label='Schedule' icon={ <icons.schedule /> } />
-				<LeftPanelNavigationItem label='Study Space' icon={ <icons.studyspace /> } />
+				<LeftPanelNavigationItem label='Study Space' icon={ <icons.studyspace /> } onClick={() => navigate("/space")} />
 
 				<LeftPanelNavigationDropdown label="Groups" />
-				<LeftPanelNavigationItem label='Explore Groups' icon={<icons.groups fill={activeItem === "groups" ? "black" : "none"} /> } onClick={() => setActiveItem('groups')} />
+				<LeftPanelNavigationItem label='Explore Groups' icon={<icons.groups fill={activeItem === "groups" ? "black" : "none"} /> } onClick={() => setActiveItem('groups', '/')} />
 				<LeftPanelNavigationButton label="Create A Group" icon={<icons.plus stroke="white" />} />
 
 				<LeftPanelNavigationDropdown label="Tools" hasIcon={false} />

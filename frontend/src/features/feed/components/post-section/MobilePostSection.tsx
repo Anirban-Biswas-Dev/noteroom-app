@@ -13,7 +13,7 @@ export default function MobilePostSection() {
         setNavElements({
             mobileLeft: (
                 <div className='flex gap-2 xl:hidden'>
-                    <BackButton onClick={() => navigate(-1)} />
+                    <BackButton />
                     <div className="action-title h-12 overflow-hidden flex flex-row justify-start items-center">
                         <span className="text-lg font-['Space_Grotesk']">Create Post</span>
                     </div>
