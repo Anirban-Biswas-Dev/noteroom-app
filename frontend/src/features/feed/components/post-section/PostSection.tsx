@@ -1,5 +1,6 @@
 import Divider from "@components/Divider"
 import PostSectionTools from "./PostSectionTools"
+import icons from "@utils/iconsLoader"
 
 function PostSectionIntro() {
 	return (
@@ -25,9 +26,9 @@ function PostSectionIntro() {
 			</div>
 
 			<div className="tools-section flex justify-center items-center xl:hidden ">
-				<svg width="30" height="30" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M11.38 7.04688V15.7135M7.04663 11.3802H15.7133M22.2133 11.3802C22.2133 17.3633 17.3631 22.2135 11.38 22.2135C5.39688 22.2135 0.546631 17.3633 0.546631 11.3802C0.546631 5.39712 5.39688 0.546875 11.38 0.546875C17.3631 0.546875 22.2133 5.39712 22.2133 11.3802Z" stroke="#1E1E1E" stroke-opacity="0.55" stroke-width="1.09336" stroke-linecap="round" stroke-linejoin="round" />
-				</svg>
+				<div className="plus-icon rounded-full border border-[#1E1E1E] flex justify-center items-center">
+					<icons.plus width="30" height="30" stroke="#1E1E1E" />
+				</div>
 			</div>
 		</div>
 	)
