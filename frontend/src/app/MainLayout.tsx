@@ -8,6 +8,8 @@ import { useFloatingElementContext } from "@contexts/FloatingElementsContext"
 import NavigationPanelProvider from "@contexts/NavigationPanelContext"
 import { useGlobalLayoutContext } from "@contexts/GlobalLayoutContext"
 import Backdrop from "@components/Backdrop"
+import LeftPanelProvider from "@contexts/LeftPanelContext"
+import RightPanelProvider from "@contexts/RightPanelContext"
 
 
 function MainContainer({ children }: { children: React.ReactNode | React.ReactNode[] }) {
@@ -33,7 +35,7 @@ function UILayer({ children }: { children: React.ReactNode | React.ReactNode[] }
 	)
 }
 
-function PrimaryMiddleSection({ children }: { children: React.ReactNode[] }) {
+function PrimaryMiddleSection({ children }: { children: React.ReactNode | React.ReactNode[] }) {
 	return (
 		<div className="primary-middle-section
 			bg-(--primary-secondary-rightpanel-clr)
@@ -85,23 +87,27 @@ export default function MainLayout() {
 	return (
 		<UILayer>
 			<MainContainer>
-				<LeftPanel open={openSidebar} />
+				<LeftPanelProvider>
+					<LeftPanel open={openSidebar} />
 
-				{openSidebar && <Backdrop zIndex={30} onClick={() => setOpenSidebar(false)} /> }
+					{openSidebar && <Backdrop zIndex={30} onClick={() => setOpenSidebar(false)} /> }
 
-				<PrimaryMiddleSection>
-					<NavigationPanelProvider>
-						<HolderMiddleSection>
-							<NavigationPanel />
+					<PrimaryMiddleSection>
+						<RightPanelProvider>
+							<NavigationPanelProvider>
+								<HolderMiddleSection>
+									<NavigationPanel />
 
-							<SecondaryMiddleSection>
-								<Outlet />
-							</SecondaryMiddleSection>
-						</HolderMiddleSection>
-					</NavigationPanelProvider>
+									<SecondaryMiddleSection>
+										<Outlet />
+									</SecondaryMiddleSection>
+								</HolderMiddleSection>
+							</NavigationPanelProvider>
 
-					<RightPanel />
-				</PrimaryMiddleSection>
+							<RightPanel />
+						</RightPanelProvider>
+					</PrimaryMiddleSection>
+				</LeftPanelProvider>
 			</MainContainer>
 
 			{ openFloatingElement &&

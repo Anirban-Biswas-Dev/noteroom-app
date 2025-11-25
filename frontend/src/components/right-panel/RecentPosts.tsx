@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom"
+import RecentSection from "./RecentSection"
+import { useState } from "react"
+
+type TRecentSection = 'posts' | 'groups' | 'people'
 
 function RecentPost() {
 	const text = "Lorem ipsum dolor sit amet consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing elitLorem ipsum dolor sit amet consectetur adipisicing elit"
@@ -34,7 +38,7 @@ function RecentPost() {
 	)
 }
 
-export default function RecentPosts() {
+function RecentPosts() {
 	return (
 		<div className="recent-posts flex flex-col gap-3 text-[12px] mb-10">
 			<RecentPost />
@@ -44,6 +48,26 @@ export default function RecentPosts() {
 			<RecentPost />
 			<RecentPost />
 			<RecentPost />
+		</div>
+	)
+}
+
+export function RecentPostsSection() {
+	const [activeRecentSection, setActiveRecentSection] = useState<TRecentSection | null>('posts')
+
+	return (
+		<div className="container w-[90%] h-full">
+			<div className="header h-[10vh] flex items-center w-full">
+				<span className="font-medium font-sans text-[18px]">Recently seen</span>
+			</div>
+
+			<div className="right-panel-container flex flex-col items-center h-[90vh] w-[90%] desktop:w-[80%]">
+				<RecentSection activeRecentSection={[activeRecentSection, setActiveRecentSection]} />
+
+				<div className="overflow-y-auto left-panel">
+					{ activeRecentSection === "posts" && <RecentPosts /> }
+				</div>
+			</div>
 		</div>
 	)
 }

@@ -41,3 +41,4 @@ export default function RecentSection({ activeRecentSection: [activeRecentSectio
 		</div>
 	)
 }
+
