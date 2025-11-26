@@ -83,7 +83,7 @@ export default function FeedMediaPost({ withMedia = true, isLast, id, openedPost
 						<icons.comment viewBox="0 0 24 24" />
 					</PostInteraction>
 					<PostInteraction name='shares' value='98'>
-						<icons.share viewBox="0 0 24 24" />
+						<icons.share viewBox="0 0 24 24" stroke="#575757" />
 					</PostInteraction>
 				</div>
 			</div>
