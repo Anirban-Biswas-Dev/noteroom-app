@@ -61,7 +61,7 @@ export default function StudySpace() {
 	useEffect(() => {
 		setTopbarElements({
 			elements: (
-				<>
+				<div className="hidden xl:flex w-full h-full">
 					<div className="left-side w-[85%] h-full p-2 left-panel">
 						<RecentOpenedTabs />
 				    </div>
@@ -80,7 +80,7 @@ export default function StudySpace() {
 							</button>
 						</div>
 					</div>
-				</>
+				</div>
 			)
 		})
 
