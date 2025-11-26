@@ -10,6 +10,7 @@ import { useGlobalLayoutContext } from "@contexts/GlobalLayoutContext"
 import Backdrop from "@components/Backdrop"
 import LeftPanelProvider from "@contexts/LeftPanelContext"
 import RightPanelProvider from "@contexts/RightPanelContext"
+import TopbarProvider, { useTopbarContext } from "@contexts/TopBarContext"
 
 
 function MainContainer({ children }: { children: React.ReactNode | React.ReactNode[] }) {
@@ -17,7 +18,7 @@ function MainContainer({ children }: { children: React.ReactNode | React.ReactNo
         <div className="main-container
             relative
             bg-(--leftpanel-maincontainer-clr)
-            h-screen overflow-hidden w-full
+            h-screen w-full min-h-0 overflow-hidden
             grid grid-cols-1
             xl:grid-cols-[1.2fr_6fr] xl:grid-rows-[auto_1fr]
             desktop:grid-cols-[0.9fr_5fr]
@@ -44,6 +45,15 @@ function PrimaryMiddleSection({ children }: { children: React.ReactNode | React.
 			xl:h-[98.5%] xl:w-[99.5%] xl:self-end xl:grid-cols-[5fr_1.8fr] xl:rounded-[50px_0_0_0]
 		">
 			{children}
+		</div>
+	)
+}
+function TopbarSection() {
+	const { topbarElements: [topbarElements] } = useTopbarContext()!
+
+	return (
+		<div className="top-bar min-w-0 w-full h-full flex items-center">
+			{ topbarElements.elements || <></> }
 		</div>
 	)
 }
@@ -89,24 +99,27 @@ export default function MainLayout() {
 			<MainContainer>
 				<LeftPanelProvider>
 					<LeftPanel open={openSidebar} />
-
 					{openSidebar && <Backdrop zIndex={30} onClick={() => setOpenSidebar(false)} /> }
 
-					<PrimaryMiddleSection>
-						<RightPanelProvider>
-							<NavigationPanelProvider>
-								<HolderMiddleSection>
-									<NavigationPanel />
+					<TopbarProvider>
+						<TopbarSection />
 
-									<SecondaryMiddleSection>
-										<Outlet />
-									</SecondaryMiddleSection>
-								</HolderMiddleSection>
-							</NavigationPanelProvider>
+						<PrimaryMiddleSection>
+							<RightPanelProvider>
+								<NavigationPanelProvider>
+									<HolderMiddleSection>
+										<NavigationPanel />
 
-							<RightPanel />
-						</RightPanelProvider>
-					</PrimaryMiddleSection>
+										<SecondaryMiddleSection>
+											<Outlet />
+										</SecondaryMiddleSection>
+									</HolderMiddleSection>
+								</NavigationPanelProvider>
+
+								<RightPanel />
+							</RightPanelProvider>
+						</PrimaryMiddleSection>
+					</TopbarProvider>
 				</LeftPanelProvider>
 			</MainContainer>
 

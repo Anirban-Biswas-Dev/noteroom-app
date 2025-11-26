@@ -8,13 +8,16 @@ import { useNavigate } from "react-router-dom"
 import DecksSearchBar from "./left-panel/DecksSearchBar"
 import { DecksContainer } from "./left-panel/DecksSection"
 import { useRightPanelContext } from "@contexts/RightPanelContext"
+import { useTopbarContext } from "@contexts/TopBarContext"
+import RecentOpenedTabs from "./RecentOpenedTabs"
+import icons from "@utils/iconsLoader"
 
 export default function StudySpace() {
 	const { navElements: [, setNavElements] } = useNavigationPanelContext()!
 	const { leftPanelElements: [, setLeftPanelElements] } = useLeftPanelContext()!
 	const { rightPanelElements: [, setRightPanelElements] } = useRightPanelContext()!
+	const { topbarElements: [, setTopbarElements] } = useTopbarContext()!
 	const { sideBar: [, setOpenSidebar] } = useGlobalLayoutContext()!
-	const navigate = useNavigate()
 
 	useEffect(() => {
 		return () => setOpenSidebar(false)
@@ -53,6 +56,35 @@ export default function StudySpace() {
 		})
 
 		return () => setLeftPanelElements({})
+	}, [])
+
+	useEffect(() => {
+		setTopbarElements({
+			elements: (
+				<>
+					<div className="left-side w-[85%] h-full p-2 left-panel">
+						<RecentOpenedTabs />
+				    </div>
+
+					<div className="right-side flex items-center justify-center w-[15%] h-full">
+						<div className="tools p-2 flex">
+							<button className='button
+								bg-[#42acde] text-white
+								outline-transparent border-none rounded-[20px] p-2
+								w-[150px]
+								flex justify-center items-center gap-[5px]
+								cursor-pointer
+							'>
+								<icons.share className="w-5 h-5" stroke="white" />
+								<span className="text-[13px] font-['Space_Grotesk'] text-white font-normal">Upload</span>
+							</button>
+						</div>
+					</div>
+				</>
+			)
+		})
+
+		return () => setTopbarElements({})
 	}, [])
 
 	useEffect(() => {
