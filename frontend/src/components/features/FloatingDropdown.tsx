@@ -1,8 +1,8 @@
 import Backdrop from "@components/Backdrop";
 import React from "react";
-import icons from "@utils/iconsLoader";
+import type { TFloatingDropDownItem } from "@stypes/components";
 
-function DropdownItem({ label, icon }: { label: string, icon: React.ReactElement; }) {
+function DropdownItem({ label, icon }: { label: string, icon: React.ReactElement<SVGElement>; }) {
 	return (
 		<span className="item
 			flex w-auto items-center gap-3
@@ -25,7 +25,7 @@ function DropdownItemDivider() {
 	return <div className="-mx-2 w-auto h-px border border-gray-200"></div>;
 }
 
-export default function FloatingDropdown({ close }: { close: () => void }) {
+export default function FloatingDropdown({ items, close }: { items: TFloatingDropDownItem[], close: () => void }) {
 
 	return (
 		<>
@@ -49,13 +49,9 @@ export default function FloatingDropdown({ close }: { close: () => void }) {
 					<div className="w-[30%] bg-[#D8D8D8] rounded-full active:bg-gray-700" onClick={close}></div>
 				</div>
 
-				<DropdownItem label="Save" icon={<icons.save />} />
-				<DropdownItem label="Save to Space" icon={<icons.studyspace />}/>
-				<DropdownItemDivider />
-				<DropdownItem label="Hide Post" icon={<icons.hide />} />
-				<DropdownItemDivider />
-				<DropdownItem label="Block" icon={<icons.block />} />
-				<DropdownItem label="Report" icon={<icons.report />}/>
+				{ items.map(item => {
+					return typeof item === "string" ? <DropdownItemDivider /> : <DropdownItem label={item.label} icon={item.icon} />
+				}) }
 			</div>
 
 			<Backdrop zIndex={40} onClick={close} extendedClass="xl:hidden block" />
