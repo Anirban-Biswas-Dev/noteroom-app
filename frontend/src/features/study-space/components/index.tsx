@@ -3,14 +3,16 @@ import HamburgerMenuButton from "@components/HamburgerMenuButton"
 import { useGlobalLayoutContext } from "@contexts/GlobalLayoutContext"
 import { useLeftPanelContext } from "@contexts/LeftPanelContext"
 import { useNavigationPanelContext } from "@contexts/NavigationPanelContext"
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 import DecksSearchBar from "./left-panel/DecksSearchBar"
 import { DecksContainer } from "./left-panel/DecksSection"
 import { useRightPanelContext } from "@contexts/RightPanelContext"
-import { useTopbarContext } from "@contexts/TopBarContext"
+import { useTopbarContext } from "@contexts/TopbarContext"
 import RecentOpenedTabs from "./RecentOpenedTabs"
 import icons from "@utils/iconsLoader"
+import { usePrimaryTopbarContext } from "@contexts/PrimaryTopbarContext"
+import DeckNavigator from "./DeckNavigator"
+import Post from "@components/features/Post"
 
 export default function StudySpace() {
 	const { navElements: [, setNavElements] } = useNavigationPanelContext()!
@@ -18,6 +20,7 @@ export default function StudySpace() {
 	const { rightPanelElements: [, setRightPanelElements] } = useRightPanelContext()!
 	const { topbarElements: [, setTopbarElements] } = useTopbarContext()!
 	const { sideBar: [, setOpenSidebar] } = useGlobalLayoutContext()!
+	const { primaryTopbar: [, setPrimaryTopbar]} = usePrimaryTopbarContext()!
 
 	useEffect(() => {
 		return () => setOpenSidebar(false)
@@ -30,14 +33,14 @@ export default function StudySpace() {
 			},
 			mobile: {
 				left: (
-                <div className='flex gap-2 xl:hidden'>
-                    <BackButton />
-                    <HamburgerMenuButton onClick={() => setOpenSidebar(prev => !prev)} />
-                    <div className="action-title h-12 overflow-hidden flex flex-row justify-start items-center">
-                        <span className="text-lg font-['Space_Grotesk']">Study Space</span>
-                    </div>
-                </div>
-            ),
+					<div className='flex gap-2 xl:hidden'>
+						<BackButton />
+						<HamburgerMenuButton onClick={() => setOpenSidebar(prev => !prev)} />
+						<div className="action-title h-12 overflow-hidden flex flex-row justify-start items-center">
+							<span className="text-lg font-['Space_Grotesk']">Study Space</span>
+						</div>
+					</div>
+				),
 				right: (
 					<div className='flex gap-2'>
 						<div className="upload-button rounded-[50%] p-3 bg-[#42ACDE]">
@@ -106,6 +109,52 @@ export default function StudySpace() {
 		return () => setRightPanelElements({})
 	}, [])
 
+	useEffect(() => {
+		setPrimaryTopbar({
+			elements: (
+				<div className="desktop-deck-navigator hidden w-full items-center xl:flex mb-10">
+					<DeckNavigator />
+				</div>
+			)
+		})
 
-	return null
+		return () => setPrimaryTopbar({})
+	}, [])
+
+	const [openedPostTools, setOpenedPostTools] = useState<number | null>(null)
+
+	return (
+		<div className="flex w-full flex-col gap-10 overflow-y-auto">
+			<div className="mobile-deck-navigator flex xl:hidden mt-5">
+				<DeckNavigator />
+			</div>
+
+			<div className="mb-10">
+				<Post
+					authorProfilePic={<></>}
+					postCreationDate={false}
+					postInteraction={<></>}
+					tools={
+						<div className="view-origin-post">
+							<button className={`
+								bg-[#484848]
+								w-auto p-2
+								font-medium text-[12px] text-white
+								rounded-full border-none
+								outline-transparent cursor-pointer
+							`}>View Original Post</button>
+						</div>
+					}
+					floatingDropDownItems={[
+						{label:"Move to Another Folder", icon:<icons.studyspace />},
+						"divider",
+						{label:"Remove from Space", icon:<icons.delete className='w-[25px] h-[25px] cursor-pointer' viewBox="0 0 24 24" />},
+					]}
+					withMedia={true} 
+					id={1} 
+					openedPostTools={[openedPostTools, setOpenedPostTools]} 
+				/>
+			</div>
+		</div>
+	)
 }
