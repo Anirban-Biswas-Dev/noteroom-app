@@ -3,8 +3,15 @@ import { createContext, useContext, useState } from "react";
 
 
 type TNavigationElements = {
-    mobileLeft?: React.ReactNode,
-    right?: React.ReactNode
+    desktop?: {
+        show?: boolean,
+        left?: React.ReactNode,
+        right?: React.ReactNode
+    },
+    mobile?: {
+        left?: React.ReactNode,
+        right?: React.ReactNode
+    }
 }
 type TNavigationPanelContext = {
     navElements: StateController<TNavigationElements>
@@ -14,7 +21,11 @@ type TNavigationPanelContext = {
 const NavigationPanelContext = createContext<TNavigationPanelContext | null>(null)
 
 export default function NavigationPanelProvider({ children }: { children: React.ReactNode | React.ReactNode[] }) {
-    const [navElements, setNavElements] = useState<TNavigationElements>({})
+    const [navElements, setNavElements] = useState<TNavigationElements>({
+        desktop: {
+            show: true
+        }
+    })
 
     return (
         <NavigationPanelContext value={{ navElements: [navElements, setNavElements] }}>

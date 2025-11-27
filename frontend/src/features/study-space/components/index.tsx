@@ -25,7 +25,11 @@ export default function StudySpace() {
 
 	useEffect(() => {
         setNavElements({
-            mobileLeft: (
+			desktop: {
+				show: false
+			},
+			mobile: {
+				left: (
                 <div className='flex gap-2 xl:hidden'>
                     <BackButton />
                     <HamburgerMenuButton onClick={() => setOpenSidebar(prev => !prev)} />
@@ -34,7 +38,14 @@ export default function StudySpace() {
                     </div>
                 </div>
             ),
-            right: <></>
+				right: (
+					<div className='flex gap-2'>
+						<div className="upload-button rounded-[50%] p-3 bg-[#42ACDE]">
+							 <icons.share className="w-5 h-5" stroke="white" />
+						 </div>
+					</div>
+				)
+			}
         })
 
         return () => setNavElements({})

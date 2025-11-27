@@ -5,12 +5,10 @@ import { useEffect, useState } from 'react'
 import type { TComment } from '../types'
 import { useNavigationPanelContext } from '@contexts/NavigationPanelContext'
 import BackButton from '@components/BackButton'
-import { useNavigate } from 'react-router-dom'
 import RecommendedPostsSection from './recommendation-section/RecommendedPostsSection'
 
 export default function PostView() {
     const { navElements: [, setNavElements] } = useNavigationPanelContext()!
-    const navigate = useNavigate()
 
     const [comments] = useState<TComment[]>([
         {
@@ -85,14 +83,19 @@ export default function PostView() {
 
     useEffect(() => {
         setNavElements({
-            mobileLeft: (
-	            <div className='flex gap-2 xl:hidden'>
-	                <BackButton />
-	                <div className="action-title h-12 overflow-hidden flex flex-row justify-start items-center">
-	                    <span className="text-lg font-['Space_Grotesk']">Post</span>
-	                </div>
-	            </div>
-            )
+            desktop: {
+                show: true
+            },
+            mobile: {
+                left: (
+                    <div className='flex gap-2 xl:hidden'>
+                        <BackButton />
+                        <div className="action-title h-12 overflow-hidden flex flex-row justify-start items-center">
+                            <span className="text-lg font-['Space_Grotesk']">Post</span>
+                        </div>
+                    </div>
+                )
+            }
         })
 
         return () => setNavElements({})

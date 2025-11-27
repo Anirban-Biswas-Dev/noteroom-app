@@ -4,10 +4,12 @@ import FeedSection from "./feed-section/FeedSection";
 import { useFloatingElementContext } from "../../../contexts/FloatingElementsContext";
 import { useNavigate } from "react-router-dom";
 import useWindowSize from "@hooks/useWindowSize";
+import { useNavigationPanelContext } from "@contexts/NavigationPanelContext";
 
 export default function Feed() {
     const navigate = useNavigate()
     const { width: windowWidth } = useWindowSize()
+    const { navElements: [, setNavElements] } = useNavigationPanelContext()!
 
     const { 
 		floatingOverlay: [, setOpenFloatingElement], 
@@ -27,6 +29,16 @@ export default function Feed() {
     useEffect(() => {
     	setOpenFloatingElement(openPostContainer)
     }, [openPostContainer, setOpenFloatingElement])
+
+    useEffect(() => {
+        setNavElements({
+            desktop: {
+                show: true
+            }
+        })
+
+        return () => setNavElements({})
+    }, [])
 
     return (
         <>
