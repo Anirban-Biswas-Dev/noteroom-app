@@ -10,7 +10,8 @@ import { useGlobalLayoutContext } from "@contexts/GlobalLayoutContext"
 import Backdrop from "@components/Backdrop"
 import LeftPanelProvider from "@contexts/LeftPanelContext"
 import RightPanelProvider from "@contexts/RightPanelContext"
-import TopbarProvider, { useTopbarContext } from "@contexts/TopBarContext"
+import TopbarProvider, { useTopbarContext } from "@contexts/TopbarContext"
+import PrimaryTopbarProvider, { usePrimaryTopbarContext } from "@contexts/PrimaryTopbarContext"
 
 
 function MainContainer({ children }: { children: React.ReactNode | React.ReactNode[] }) {
@@ -42,7 +43,7 @@ function PrimaryMiddleSection({ children }: { children: React.ReactNode | React.
 			bg-(--primary-secondary-rightpanel-clr)
 			h-full w-full
 			grid grid-cols-1
-			xl:h-[98.5%] xl:w-[99.5%] xl:self-end xl:grid-cols-[5fr_1.8fr] xl:rounded-[50px_0_0_0]
+			xl:h-[98.5%] xl:w-[99.5%] xl:self-end xl:grid-cols-[5fr_1.8fr] xl:grid-rows-[auto_1fr] xl:rounded-[50px_0_0_0]
 		">
 			{children}
 		</div>
@@ -54,6 +55,15 @@ function TopbarSection() {
 	return (
 		<div className="top-bar min-w-0 w-full h-full flex items-center">
 			{ topbarElements.elements || <></> }
+		</div>
+	)
+}
+function PrimaryTopbar() {
+	const { primaryTopbar: [primaryTopbar] } = usePrimaryTopbarContext()!
+
+	return (
+		<div className="flex min-h-0 h-auto w-full xl:col-span-2">
+			{ primaryTopbar.elements || <></>}
 		</div>
 	)
 }
@@ -105,19 +115,23 @@ export default function MainLayout() {
 						<TopbarSection />
 
 						<PrimaryMiddleSection>
-							<RightPanelProvider>
-								<NavigationPanelProvider>
-									<HolderMiddleSection>
-										<NavigationPanel />
+							<PrimaryTopbarProvider>
+								<PrimaryTopbar />
 
-										<SecondaryMiddleSection>
-											<Outlet />
-										</SecondaryMiddleSection>
-									</HolderMiddleSection>
-								</NavigationPanelProvider>
+								<RightPanelProvider>
+									<NavigationPanelProvider>
+										<HolderMiddleSection>
+											<NavigationPanel />
 
-								<RightPanel />
-							</RightPanelProvider>
+											<SecondaryMiddleSection>
+												<Outlet />
+											</SecondaryMiddleSection>
+										</HolderMiddleSection>
+									</NavigationPanelProvider>
+
+									<RightPanel />
+								</RightPanelProvider>
+							</PrimaryTopbarProvider>
 						</PrimaryMiddleSection>
 					</TopbarProvider>
 				</LeftPanelProvider>
