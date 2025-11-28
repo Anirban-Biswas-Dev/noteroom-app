@@ -1,5 +1,6 @@
 import React from "react"
 import icons from "@utils/iconsLoader"
+import { Link } from "react-router-dom"
 
 function InteractionTool({ name, children, extendedClass }: { name: string, children: React.ReactElement<any>, extendedClass?: string }) {
 	const clonedIcon = React.cloneElement(children, {
@@ -32,13 +33,13 @@ export default function DefaultInteractionTools() {
                 <icons.search viewBox="0 0 24 24" />
             </InteractionTool>
 
-            <div className="justify-self-start h-10 w-10 overflow-hidden rounded-[50%]">
+            <Link className="justify-self-start h-10 w-10 overflow-hidden rounded-[50%]" to={"/user"}>
                 <img 
                     src="https://placehold.co/600x400/yellow/black?text=A" 
                     className='w-full h-full object-cover'
                     alt="user"
                 />
-            </div>
+            </Link>
         </div>
     )
 }
